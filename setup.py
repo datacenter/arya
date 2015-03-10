@@ -27,7 +27,7 @@ with open('LICENSE.txt') as f:
 exec(open(os.path.join('arya', 'version.py')).read())
 
 PKGNAME = 'arya'
-URL = 'https://github.com/datacenter/ACI/' + PKGNAME
+URL = 'https://github.com/datacenter/' + PKGNAME
 DOWNLOADURL = URL + '/releases/tag/' + str(__version__)
 
 setup(
@@ -36,7 +36,7 @@ setup(
     description='APIC Rest to pYthon Adapter',
     long_description=open('README.rst').read(),
     packages=[PKGNAME],
-    url='https://github.com/datacenter/ACI/arya',
+    url='https://github.com/datacenter/arya',
     download_url=DOWNLOADURL,
     license=license,
     author='Paul Lesiak',
