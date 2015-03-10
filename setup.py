@@ -34,7 +34,7 @@ setup(
     name=PKGNAME,
     version=__version__,
     description='APIC Rest to pYthon Adapter',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     packages=[PKGNAME],
     url='https://github.com/datacenter/arya',
     download_url=DOWNLOADURL,
