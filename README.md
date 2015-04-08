@@ -39,18 +39,26 @@ Required
 
 Recommended:
 
-* Git
+* pip (to install from pypi)
+* Git (to install from github)
 
 ## Downloading
+
 Option A:
+
+Install from pypi:
+
+    pip install arya
+
+Option B:
 
 If you have git installed clone the repository
 
     git clone https://github.com/datacenter/arya.git
 
-Option B:
+Option C:
 
-If you don't have git [download a zip copy of the repository](https://github.com/datacenter/ACI/archive/master.zip) and extract.  
+If you don't have git [download a zip copy of the repository](https://github.com/datacenter/arya/archive/master.zip) and extract.  
 
 ## Installing
 Change directory to the cloned/extracted repo
