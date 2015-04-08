@@ -42,13 +42,15 @@ Recommended:
 * pip (to install from pypi)
 * Git (to install from github)
 
-## Downloading
+## Downloading and installing
 
 Option A:
 
-Install from pypi:
+Download and install from pypi:
 
     pip install arya
+
+With this option, this is the only step.
 
 Option B:
 
@@ -56,12 +58,13 @@ If you have git installed clone the repository
 
     git clone https://github.com/datacenter/arya.git
 
+Install following the instructions below.
+
 Option C:
 
 If you don't have git [download a zip copy of the repository](https://github.com/datacenter/arya/archive/master.zip) and extract.  
 
-## Installing
-Change directory to the cloned/extracted repo
+### Install if using options B or C
 
     cd arya
 
