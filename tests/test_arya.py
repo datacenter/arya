@@ -117,7 +117,7 @@ class Test_arya:
         url, user, password, secure = apic
         url = str(url).split('//')[1]
         args = Namespace(
-            stdin=None, filein=testfiles[0], ip=url, password=password,
+            stdin=None, filein=testfiles[0], ip=url, username=user, password=password,
             nocommit=True)
         assert arya.runfromcli(args)
 
@@ -141,7 +141,7 @@ class Test_arya:
         url, user, password, secure = apic
         url = str(url).split('//')[1]
         args = Namespace(sourcedir=sourcedir, filein=None, stdin=None,
-                         targetdir=targetdir, ip=url, password=password,
+                         targetdir=targetdir, ip=url, username=user, password=password,
                          nocommit=True)
         assert arya.runfromcli(args)
 

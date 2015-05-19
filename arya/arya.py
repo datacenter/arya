@@ -35,6 +35,7 @@ from collections import OrderedDict
 def convert_dn_to_cobra(dn):
     # Taken from https://gist.github.com/mtimm/7c238d1c682a684867fd
     from cobra.mit.naming import Dn
+    imports = []
     cobra_dn = Dn.fromString(dn)
     parentMoOrDn = "''"
     dn_dict = OrderedDict()
@@ -47,7 +48,9 @@ def convert_dn_to_cobra(dn):
         dn_dict[rn_str]['parentMoOrDn'] = parentMoOrDn
         parentMoOrDn = rn.meta.moClassName
     code = []
-    # dn_dict.popitem()
+    
+    dn_dict.popitem()
+    
     for arn in dn_dict.items():
         if len(arn[1]['namingVals']) > 0:
             nvals_str = ", " + ", ".join(map(lambda x: "'{0}'".format(str(x)), arn[1]['namingVals']))
@@ -57,7 +60,9 @@ def convert_dn_to_cobra(dn):
                                          arn[1]['className'],
                                          arn[1]['parentMoOrDn'],
                                          nvals_str))
-    return arn[1]['moClassName'], '\n'.join(code)
+        package = '.'.join(arn[1]['className'].split('.')[0:-1])
+        imports.append(package)
+    return arn[1]['moClassName'], imports, '\n'.join(code)
 
 class arya(object):
 
@@ -262,7 +267,7 @@ class arya(object):
         return pycode
 
     def getpython(self, xmlstr=None, jsonstr=None, apicip='1.1.1.1',
-                  apicpassword='password', apicuser='admin', nocommit=False, brief=True):
+                  apicpassword='password', apicuser='admin', nocommit=False, brief=False):
 
         if brief:
             pycodetemplate = Template("""$lookupCode
@@ -334,13 +339,14 @@ $commitCode""")
             lookupcodestr = 'topMo = cobra.model.pol.Uni(\'\')\n'
             vals['lookupCode'] = lookupcodestr
         elif toptag == 'polUni':
+            self.importlist.append('cobra.model.pol')
             vals['lookupCode'] = '{0} = cobra.model.pol.Uni(\'\')'.format(
                 topobjectvar)
         else:
-            # varnameindex = 0
             if topdn:
                 try:
-                    topobjectvar, lookupcodestr = convert_dn_to_cobra(topdn)
+                    topobjectvar, imports, lookupcodestr = convert_dn_to_cobra(topdn)
+                    self.importlist.extend(imports)
 
                 except ImportError:
                     self.importlist.append('cobra.mit.naming')
@@ -369,7 +375,7 @@ $commitCode""")
         vals['apicPassword'] = apicpassword
         vals['sourceDoc'] = xmlstr or jsonstr
         vals['myFileName'] = os.path.basename(str(sys.argv[0]))
-        vals['imports'] = '\n'.join(['import %s' % i for i in self.importlist])
+        vals['imports'] = '\n'.join(['import %s' % i for i in sorted(set(self.importlist))])
         vals['topMo'] = topobjectvar
         commitcodestr = 'c = cobra.mit.request.ConfigRequest()\n'
         commitcodestr += 'c.addMo({0})\n'.format(topobjectvar)
@@ -412,10 +418,12 @@ def runfromcli(args):
         if format == 'xml':
             return arya().getpython(xmlstr=inputstr, apicip=args.ip,
                                     apicpassword=args.password,
+                                    apicuser=args.username,
                                     nocommit=args.nocommit)
         elif format == 'json':
             return arya().getpython(jsonstr=inputstr, apicip=args.ip,
                                     apicpassword=args.password,
+                                    apicuser=args.username,
                                     nocommit=args.nocommit)
         else:
             raise IOError('Unsupported format passed as input. Please check ' +
