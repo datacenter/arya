@@ -1,9 +1,8 @@
 # APIC Rest Python Adapter (arya)
 
-Original Author: Paul Lesiak - [palesiak@cisco.com](palesiak@cisco.com)  
-Co-author: Mike Timm - [mtimm@cisco.com](mtimm@cisco.com)
-Solution Validation Services contact: Tim Garner - [tigarner@cisco.com](tigarner@cisco.com)
+Original Author: Paul Lesiak - [palesiak@cisco.com](palesiak@cisco.com)
 
+Co-author: Mike Timm - [mtimm@cisco.com](mtimm@cisco.com)
 
 # Description
 
@@ -85,12 +84,14 @@ Usage is as such:
 
     $ arya.py
 
-    usage: Code generator for APIC cobra SDK [-h] [-f FILE] [-s] [-d SOURCEDIR]
-                                             [-t TARGETDIR] [-i IP] [-p PASSWORD]
+    usage: Code generator for APIC cobra SDK [-h] [-f FILEIN] [-s] [-d SOURCEDIR]
+                                             [-t TARGETDIR] [-i IP] [-u USERNAME]
+                                             [-p PASSWORD] [-nc] [-b]
 
     optional arguments:
       -h, --help            show this help message and exit
-      -f FILE, --file FILE  Document containing post to be sent to REST API
+      -f FILEIN, --filein FILEIN
+                            Document containing post to be sent to REST API
       -s, --stdin           Parse input from stdin, for use as a filter, e.g., cat
                             doc.xml | arya.py -s
       -d SOURCEDIR, --sourcedir SOURCEDIR
@@ -100,9 +101,16 @@ Usage is as such:
                             Where to write the .py files that come from the -d
                             directory. If none is specified, it will default to
                             SOURCEDIR
-      -i IP, --ip IP        IP address of APIC
+      -i IP, --ip IP        IP address of APIC to be pre-populated
+      -u USERNAME, --username USERNAME
+                            Username for APIC account to be pre-populated in
+                            generated code
       -p PASSWORD, --password PASSWORD
-                            Password for admin account on APIC
+                            Password for APIC account to be pre-populated in
+                            generated code
+      -nc, --nocommit       Generate code without final commit to changes
+      -b, --brief           Generate brief code (without headers, comments, etc)
+                              Password for admin account on APIC
 
 
 # License
