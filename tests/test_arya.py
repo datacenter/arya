@@ -118,7 +118,7 @@ class Test_arya:
         url = str(url).split('//')[1]
         args = Namespace(
             stdin=None, filein=testfiles[0], ip=url, username=user, password=password,
-            nocommit=True)
+            nocommit=True, brief=False)
         assert arya.runfromcli(args)
 
     def test_clean_output(self, targetdir):
@@ -142,7 +142,7 @@ class Test_arya:
         url = str(url).split('//')[1]
         args = Namespace(sourcedir=sourcedir, filein=None, stdin=None,
                          targetdir=targetdir, ip=url, username=user, password=password,
-                         nocommit=True)
+                         nocommit=True, brief=False)
         assert arya.runfromcli(args)
 
     @needapic

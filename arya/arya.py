@@ -419,12 +419,14 @@ def runfromcli(args):
             return arya().getpython(xmlstr=inputstr, apicip=args.ip,
                                     apicpassword=args.password,
                                     apicuser=args.username,
-                                    nocommit=args.nocommit)
+                                    nocommit=args.nocommit,
+                                    brief=args.brief)
         elif format == 'json':
             return arya().getpython(jsonstr=inputstr, apicip=args.ip,
                                     apicpassword=args.password,
                                     apicuser=args.username,
-                                    nocommit=args.nocommit)
+                                    nocommit=args.nocommit,
+                                    brief=args.brief)
         else:
             raise IOError('Unsupported format passed as input. Please check ' +
                           'that input is formatted correctly in JSON or XML syntax')
@@ -499,6 +501,7 @@ def main():
                         help='Generate code without final commit to changes', 
                         required=False,
                         default=False, action='store_true')
+    parser.add_argument('-b', '--brief', help='Generate brief code (without headers, comments, etc)', required=False, default=False, action='store_true' )
     args = parser.parse_args()
 
     if not args.filein and not args.sourcedir and not args.stdin:
