@@ -82,18 +82,6 @@ class PyraTree(object):
         recurse_tree(self.root, tree['children'])
         return {self.root.name: tree}
 
-    # def _etree(self):
-    #     """Element Tree (XML Tree). Only use this if the below method (etree via Cobra) is not working for you."""
-    #     et_root = ElementTree.Element(self.root.tag, self.root.attrib)
-    #     def recurse_tree(parent, et_parent):
-    #         """Recursively build a full XML ElementTree rooted on 'parent'"""
-    #         for child in parent.children:
-    #             et_child = ElementTree.Element(child.tag, child.attrib)
-    #             et_parent.append(et_child)
-    #             recurse_tree(child, et_child)
-    #     recurse_tree(self.root, et_root)
-    #     return ElementTree.ElementTree(et_root)
-
     def _etree(self):
         """etree via Cobra"""
         return ElementTree.fromstring(toXMLStr(self.root.mo))
