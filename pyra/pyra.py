@@ -25,7 +25,7 @@ Converts cobra code into equivalent blocks of APIC XML/JSON.
 
 import json
 import re
-import xml.etree.ElementTree as ElementTree
+import lxml.etree as ElementTree
 from cobra.internal.codec.jsoncodec import toJSONStr
 from cobra.internal.codec.xmlcodec import toXMLStr
 import cobra.mit.access
@@ -71,7 +71,7 @@ class PyraTree(object):
         self._root = PyraTreeNode(mylocals[root_var], rmap)
 
     def _dtree(self):
-        """Dictionary Tree"""
+        """Return a dictionary Tree."""
         tree = {'tag': self.root.tag, 'attrib': self.root.attrib, 'children': {}}
         def recurse_tree(parent, parentdict):
             """Recursively build a hierarchy of variable names, their config properties, and their children according to their MO relationships."""
@@ -83,11 +83,24 @@ class PyraTree(object):
         return {self.root.name: tree}
 
     def _etree(self):
-        """etree via Cobra"""
+        """Return an element Tree (XML Tree). 
+        Shows MO dn's because it uses PyraTreeNode methods."""
+        et_root = ElementTree.Element(self.root.tag, self.root.attrib)
+        def recurse_tree(parent, et_parent):
+            """Recursively build a full XML ElementTree rooted on 'parent'"""
+            for child in parent.children:
+                et_child = ElementTree.Element(child.tag, child.attrib)
+                et_parent.append(et_child)
+                recurse_tree(child, et_child)
+        recurse_tree(self.root, et_root)
+        return ElementTree.ElementTree(et_root)
+
+    def _etree_cobra(self):
+        """Return an XML tree via the Cobra implementation."""
         return ElementTree.fromstring(toXMLStr(self.root.mo))
 
     def _jtree(self):
-        """json via Cobra"""
+        """Return a json tree via the Cobra implementation."""
         return json.loads(toJSONStr(self.root.mo))
 
     @property
