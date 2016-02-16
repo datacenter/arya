@@ -24,17 +24,11 @@ Converts cobra code into equivalent blocks of APIC XML/JSON.
 """
 
 import json
-import re
 import lxml.etree as ElementTree
 from cobra.internal.codec.jsoncodec import toJSONStr
 from cobra.internal.codec.xmlcodec import toXMLStr
-import cobra.mit.access
-import cobra.mit.request
-import cobra.mit.session
 import cobra.model.fv
 import cobra.model.pol
-import cobra.model.vns
-import cobra.model.vz
 
 __author__ = "Joseph LeClerc"
 __copyright__ = "Copyright (C) 2016 Cisco Systems Inc."
