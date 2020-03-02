@@ -27,7 +27,10 @@ import sys
 import xml.etree.cElementTree as ETree
 import json
 import keyword
-import StringIO
+try:
+    from StringIO import StringIO ## for Python 2
+except ImportError:
+    from io import StringIO ## for Python 3
 from argparse import ArgumentParser
 from string import Template
 from collections import OrderedDict
@@ -257,11 +260,11 @@ class arya(object):
 
     def recursejsondict(self, jsondict, parentname):
         pycode, objectname = self.buildcommand(
-            jsondict.keys()[0], parentname,
-            jsondict[jsondict.keys()[0]].get('attributes', {}))
+            list(jsondict.keys())[0], parentname,
+            jsondict[list(jsondict.keys())[0]].get('attributes', {}))
 
-        if 'children' in jsondict[jsondict.keys()[0]]:
-            for j in jsondict[jsondict.keys()[0]]['children']:
+        if 'children' in jsondict[list(jsondict.keys())[0]]:
+            for j in jsondict[list(jsondict.keys())[0]]['children']:
                 pycode += self.recursejsondict(j, objectname)
 
         return pycode
@@ -298,7 +301,7 @@ $lookupCode
 $objStructureCode
 
 # commit the generated code to APIC
-print toXMLStr($topMo)
+print(toXMLStr($topMo))
 $commitCode""")
 
 
@@ -326,10 +329,12 @@ $commitCode""")
             topdn = root.attrib.get('dn', None)
         elif jsonstr:
             j = json.loads(jsonstr)
-            toptag = j.keys()[0]
+            if 'totalCount' in j:
+                del j['totalCount']
+            toptag = list(j.keys())[0]
             if toptag == 'imdata':
                 j = j['imdata'][0]            
-            topdn = j[j.keys()[0]].get('attributes', {}).get('dn', None)
+            topdn = j[list(j.keys())[0]].get('attributes', {}).get('dn', None)
         else:
             toptag = None
 
@@ -437,7 +442,7 @@ def runfromcli(args):
         elif args.filein:
             with file(args.filein, 'r') as inputfilehandle:
                 inputstr = inputfilehandle.read()
-        print processinputstr(inputstr, args)
+        print(processinputstr(inputstr, args))
 
     elif args.sourcedir:
         sourcedir = os.path.realpath(args.sourcedir)
@@ -446,7 +451,7 @@ def runfromcli(args):
         else:
             targetdir = sourcedir
 
-        print 'Reading from %s and writing to %s' % (sourcedir, targetdir)
+        print('Reading from %s and writing to %s' % (sourcedir, targetdir))
         os.chdir(args.sourcedir)
         for files in os.listdir('.'):
             if (files.lower().endswith('.xml') or
@@ -456,14 +461,14 @@ def runfromcli(args):
                 if os.path.isfile(outfilename):
                     raise IOError(
                         'Output file: %s already exists' % outfilename)
-                print '%s -> %s' % (files, outfilename)
+                print('%s -> %s' % (files, outfilename))
 
                 p = None
                 try:
                     with file(files, 'r') as f:
                         p = processinputstr(f.read(), args)
                 except ETree.ParseError:
-                    print 'XML parser error %s' % files
+                    print('XML parser error %s' % files)
                 else:
                     with open(outfilename, 'w') as f:
                         f.write(p)

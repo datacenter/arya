@@ -42,14 +42,14 @@ setup(
     author='Paul Lesiak',
     author_email='palesiak@cisco.com',
     zip_safe=False,
-    classifiers=(
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
-    ),
+        'Programming Language :: Python :: 3.7',
+    ],
     scripts=[os.path.join('arya', 'arya.py'),
              os.path.join('arya', 'getconfigfromapic.py'),
              os.path.join('arya', 'apicxmljson.py')],

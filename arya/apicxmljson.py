@@ -117,10 +117,10 @@ def main():
 
     if format == 'xml':
         tree = ET.ElementTree(ET.fromstring(inputStr))
-        print converter().recurseXMLTree(tree.getroot())
+        print(converter().recurseXMLTree(tree.getroot()))
     elif format == 'json':
         jsondict = json.loads(inputStr)
-        print converter().recurseJSONDict(jsondict)
+        print(converter().recurseJSONDict(jsondict))
     else:
         raise IOError(
             'Unsupported format passed as input. Please check that input is' +

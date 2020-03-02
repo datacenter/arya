@@ -34,24 +34,15 @@ If you run into issues with arya, please open an issue on github
 ## Environment
 Required
 
-* Python 2.7+
+* Python 3.7+
 
 Recommended:
 
-* pip (to install from pypi)
 * Git (to install from github)
 
 ## Downloading and installing
 
 Option A:
-
-Download and install from pypi:
-
-    pip install arya
-
-With this option, this is the only step.
-
-Option B:
 
 If you have git installed clone the repository
 
@@ -59,11 +50,11 @@ If you have git installed clone the repository
 
 Install following the instructions below.
 
-Option C:
+Option B:
 
 If you don't have git [download a zip copy of the repository](https://github.com/datacenter/arya/archive/master.zip) and extract.  
 
-### Install if using options B or C
+### Install for options A or B
 
     cd arya
 

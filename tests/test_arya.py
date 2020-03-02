@@ -5,7 +5,7 @@ import sys
 import logging
 import inspect
 import pkgutil
-import httplib
+import http.client
 import subprocess
 from argparse import Namespace
 
@@ -23,7 +23,7 @@ from arya import arya
 
 needapic = pytest.mark.needapic
 
-httplib.HTTPConnection.debuglevel = 1
+http.client.HTTPConnection.debuglevel = 1
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -100,11 +100,11 @@ class Test_arya:
         assert mo
         if codec == 'xml':
             instr = toXMLStr(mo, includeAllProps=True)
-            print instr
+            print(instr)
             pycode = arya.arya().getpython(xmlstr=instr)
         elif codec == 'json':
             instr = toJSONStr(mo, includeAllProps=True)
-            print instr
+            print(instr)
             pycode = arya.arya().getpython(jsonstr=instr)
 
         assert pycode
