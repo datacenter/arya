@@ -440,7 +440,7 @@ def runfromcli(args):
         if args.stdin:
             inputstr = sys.stdin.read()
         elif args.filein:
-            with file(args.filein, 'r') as inputfilehandle:
+            with open(args.filein, 'r') as inputfilehandle:
                 inputstr = inputfilehandle.read()
         print(processinputstr(inputstr, args))
 
@@ -465,7 +465,7 @@ def runfromcli(args):
 
                 p = None
                 try:
-                    with file(files, 'r') as f:
+                    with open(files, 'r') as f:
                         p = processinputstr(f.read(), args)
                 except ETree.ParseError:
                     print('XML parser error %s' % files)
