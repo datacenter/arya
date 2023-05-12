@@ -50,9 +50,6 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.7',
     ],
-    scripts=[os.path.join('arya', 'arya.py'),
-             os.path.join('arya', 'getconfigfromapic.py'),
-             os.path.join('arya', 'apicxmljson.py')],
     entry_points={
         "console_scripts": [
             "arya=arya:main",
