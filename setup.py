@@ -52,9 +52,9 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "arya=arya:main",
-            "getconfigfromapic=getconfigfromapic:main",
-            "apicxmljson=apicxmljson:main",
+            "arya=arya.arya:main",
+            "getconfigfromapic=arya.getconfigfromapic:main",
+            "apicxmljson=arya.apicxmljson:main",
         ],
     },
     tests_require = ['pytest'],
