@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arya"
+version = "1.1.5"
+authors = [{name = "Paul Lesiak", email = "palesiak@cisco.com"}]
+license = {text = "file: LICENSE.txt"}
+description = "APIC Rest to pYthon Adapter"
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/datacenter/arya"
+Download = "https://github.com/datacenter/arya/releases/tag/1.1.5"
+
+[project.scripts]
+arya = "arya.arya:main"
+getconfigfromapic = "arya.getconfigfromapic:main"
+apicxmljson = "arya.apicxmljson:main"
+
+[project.optional-dependencies]
+testing = ["pytest"]
+
+[tool.setuptools]
+packages = ["arya"]
+zip-safe = false
+include-package-data = false
